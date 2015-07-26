@@ -2,7 +2,7 @@
 session_start();
 if(isset($_GET['logout'])){
 	session_destroy();
-	include "sexy-form.php";
+	header("Location: /account/");
 	die();
 }
 
