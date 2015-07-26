@@ -1,5 +1,7 @@
 <?php
 session_start();
+if(isset($_GET['logout'])){ session_destroy(); }
+
 if(isset($_GET["dump"])){
 highlight_string(file_get_contents("index.php") );
 }
@@ -199,7 +201,10 @@ width:400px;
 }
 </style>
 <div id="backtologin">
-<a href="/account?<?= rand()?>">Back to login page</a>
+<form method="GET" action="">
+<input type="hidden" name="logout" value="true">
+<input type="submit" id="submit" class="button expand" value="Log out" />
+</form>
 </div>
 <form method="POST" action="">
 Add account.
