@@ -1,12 +1,14 @@
 <?php
 session_start();
-if(isset($_GET['logout'])){ session_destroy(); }
+if(isset($_GET['logout'])){
+	session_destroy();
+	include "sexy-form.php";
+	die();
+}
 
 if(isset($_GET["dump"])){
 highlight_string(file_get_contents("index.php") );
 }
-?>
-<?php
 ob_start();
 function prettyDate($date){
 // source: https://gist.github.com/CodeNegar/3713606
@@ -204,7 +206,7 @@ echo file_get_contents("styles.css");
 ?>
 </style>
 <div id="backtologin">
-<form method="GET" action="">
+<form method="GET" action="" class="logout-button">
 <input type="hidden" name="logout" value="true">
 <input type="submit" id="submit" class="button expand" value="Log out" />
 </form>
