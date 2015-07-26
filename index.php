@@ -83,7 +83,7 @@ function sendMessage($userfrom,$userto,$title,$message){
 		$allnames = explode(",",$userto);
 		foreach($allnames as $usertoads){
 			file_put_contents("msg/".$usertoads,"(".$userfrom."->".$usertoads.") ".$title.":".$message."\n",FILE_APPEND);
-			return true;
+			//return true; // no no no, no
 		}
 	}
 	file_put_contents("msg/".$userto,"(".$userfrom."->".$userto.") ".$title.":".$message."\n",FILE_APPEND);
