@@ -150,7 +150,7 @@ $pass = substr_replace(sha1($_POST["password"]), sha1(sha1($_POST["password"])),
  //     header("Location: /account/?signin=".$_POST["username"]);
 //      echo "heyy";
 //      setcookie("signin", $_POST["username"], time()+3600);
-	$_SESSION['login'] = true;
+	$_SESSION['login'] = $_POST["username"];
       authed();
     if(isset($_POST["api"])){
         ob_get_clean();
