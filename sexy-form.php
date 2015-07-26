@@ -46,7 +46,12 @@ function switch(){
     <form method="POST" action="">
        <div class="row">
          <div class="large-12 columns">
-<br>
+<?php
+if($_GET["yes"] == "no"){
+$output = "The password was wrong";
+}?>
+
+<?= $output ?><br>
 <input type="checkbox" id="slideThree" class="slide" name="signup" value="true" onclick="switch();">Sign Up
 <input type="checkbox" class="slidehree" name="signin" value="true" checked>Sign In
 <input type="hidden" name="signin" value="true">

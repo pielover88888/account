@@ -163,6 +163,7 @@ $pass = substr_replace(sha1($_POST["password"]), sha1(sha1($_POST["password"])),
 //      echo $pass ." is not ".$data[1];
 //      echo "<br> and..".$oldpass ." is not ".$data[1];
       echo "That is not the stored password.";
+	header("Location: /account/?yes=no");
     break; // this really is needed otherwise it lets you ..do bad things
   }
 //end check
