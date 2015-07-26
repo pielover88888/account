@@ -175,8 +175,9 @@ $pass = substr_replace(sha1($_POST["password"]), sha1(sha1($_POST["password"])),
    }
 
     }//end foreach
- if($exists == 0){
-    echo "username no existo<br>";
+ if($exists == 0){ // if "username not found"
+	header("Location: /account/?user=no");
+//	echo "username no existo<br>";
  }
 } // end if($_POST["signin"])
 //echo $HTTP_COOKIE_VARS["signin"]; //these dont work, ignore..

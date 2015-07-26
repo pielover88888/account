@@ -48,8 +48,11 @@ function switch(){
          <div class="large-12 columns">
 <?php
 if($_GET["yes"] == "no"){
-$output = "The password was wrong";
-}?>
+	$output = "The password was wrong";
+} elseif($_GET["user"] == "no"){
+	$output = "The username specified does not exist yet!";
+}
+?>
 
 <?= $output ?><br>
 <input type="checkbox" id="slideThree" class="slide" name="signup" value="true" onclick="switch();">Sign Up
