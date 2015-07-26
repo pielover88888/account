@@ -86,15 +86,10 @@ file_put_contents("msg/".$user.":".$_POST["message"]."\n");
 
 function authed($username) {
 if(!isset($username)){
-session_start();
-$_SESSION['login'] = $_POST["username"];
 getMessages($_POST["username"],true);
 echo "<br>sent msgs:<br>";
 getMessages($_POST["username"].".sent",true,false);
 } else{
-session_start();
-$_SESSION['login'] = $username;
-
 getMessages($username,true);
 echo "<br>sent msgs:<br>";
 getMessages($username.".sent",true,false);
@@ -108,9 +103,9 @@ return true;
 }
 
 
-if(isset($_SESSION['login']) ){
-sendMessage($_SESSION["login"],$_POST["to"],$_POST["title"],$_POST["message"]);
-sendMessage($_SESSION["login"],$_POST["authed"].".sent","(->".$_POST["to"].") ".$_POST["title"],$_POST["message"]);
+if(isset($_POST["authed"]) ){
+sendMessage($_POST["authed"],$_POST["to"],$_POST["title"],$_POST["message"]);
+sendMessage($_POST["authed"],$_POST["authed"].".sent","(->".$_POST["to"].") ".$_POST["title"],$_POST["message"]);
 echo "Message sent!..Assuming the user exists. if they dont, they can make an account with that name to access the message.<br>";
 authed($_POST["authed"]);
 //file_put_contents("msg/".$_POST["authed"],$_POST["title"].":".$_POST["message"]."\n");
@@ -130,7 +125,7 @@ $pass = substr_replace(sha1($_POST["password"]), sha1(sha1($_POST["password"])),
 echo "Account created-- ".htmlspecialchars($_POST["username"])."<br>";
 }
 
-if(isset($_POST["signin"]) || $_SESSION['login']){
+if(isset($_POST["signin"])){
  $lines = file("../../db"); // load the database into an array, one line (\n or \r\n) per item.
  foreach($lines as $line){
   $data = explode(":",$line);
@@ -146,8 +141,7 @@ $pass = substr_replace(sha1($_POST["password"]), sha1(sha1($_POST["password"])),
   if($pass == $data[1] OR $oldpass == $data[1]){ // SCORE, signin works.
  //     header("Location: /account/?signin=".$_POST["username"]);
 //      echo "heyy";
-//      setcookie("signin", $_POST["username"], time()+3600);
-	$_SESSION['login'] = true;
+      setcookie("signin", $_POST["username"], time()+3600);
       authed();
     if(isset($_POST["api"])){
         ob_get_clean();
@@ -155,11 +149,10 @@ $pass = substr_replace(sha1($_POST["password"]), sha1(sha1($_POST["password"])),
     }
       break; // exit the foreach loop
     } else { // if given-passwords' hash != stored hash
-//      echo $pass ." is not ".$data[1];
-//      echo "<br> and..".$oldpass ." is not ".$data[1];
-	echo "That is not the stored password.";
-	include "sexy-form.php";
-	break; // this really is needed otherwise it lets you ..do bad things
+      echo $pass ." is not ".$data[1];
+      echo "<br> and..".$oldpass ." is not ".$data[1];
+      echo "That is not the stored password.";
+    break; // this really is needed otherwise it lets you ..do bad things
   }
 //end check
    } else {
@@ -238,4 +231,3 @@ function st(str){
 <div class="row">
 <?php getUsers(); ?>
 </div></div>
-<?php echo "you are signed in as ".$_SESSION['login']; ?>
