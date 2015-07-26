@@ -11,6 +11,13 @@ if(isset($_GET["dump"])){
 highlight_string(file_get_contents("index.php") );
 }
 ob_start();
+function contains($needle,$haystack){
+	if (strpos($haystack,$needle) !== false) {
+		return true;
+	} else {
+		return false;
+	}
+}
 function prettyDate($date){
 // source: https://gist.github.com/CodeNegar/3713606
     $time = strtotime($date);
@@ -71,9 +78,15 @@ if(isset($_POST["api"])){
 die();
 }
 }
-
 function sendMessage($userfrom,$userto,$title,$message){
-  file_put_contents("msg/".$userto,"(".$userfrom."->".$userto.") ".$title.":".$message."\n",FILE_APPEND);
+	if(contains(",",$userto) ){
+		$allnames = explode(",",$userto);
+		foreach($allnames as $usertoads){
+			file_put_contents("msg/".$usertoads,"(".$userfrom."->".$usertoads.") ".$title.":".$message."\n",FILE_APPEND);
+			return true;
+		}
+	}
+	file_put_contents("msg/".$userto,"(".$userfrom."->".$userto.") ".$title.":".$message."\n",FILE_APPEND);
 }
 
 function getUsers(){
