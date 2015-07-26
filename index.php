@@ -149,20 +149,21 @@ $pass = substr_replace(sha1($_POST["password"]), sha1(sha1($_POST["password"])),
      $oldpass = sha1($_POST["password"] ) . sha1(sha1($_POST["password"])) . "\n"; // \n fixes a glitch
 //check for password being same
   if($pass == $data[1] OR $oldpass == $data[1]){ // SCORE, signin works.
- //     header("Location: /account/?signin=".$_POST["username"]);
+	$_SESSION["login"] = $_POST["username"];
+	authed();
+	if(isset($_POST["api"])){
+		ob_get_clean();
+		getMessages($_POST["username"]);
+	}
+	header("Location: /account/");
+//      header("Location: /account/?signin=".$_POST["username"]);
 //      echo "heyy";
-      setcookie("signin", $_POST["username"], time()+3600);
-      $_SESSION["login"] = $_POST["username"];
-      authed();
-    if(isset($_POST["api"])){
-        ob_get_clean();
-        getMessages($_POST["username"]);
-    }
+//	setcookie("signin", $_POST["username"], time()+3600);
       break; // exit the foreach loop
-    } else { // if given-passwords' hash != stored hash
+  } else { // if given-passwords' hash != stored hash
 //      echo $pass ." is not ".$data[1];
 //      echo "<br> and..".$oldpass ." is not ".$data[1];
-      echo "That is not the stored password.";
+        echo "That is not the stored password.";
 	header("Location: /account/?yes=no");
     break; // this really is needed otherwise it lets you ..do bad things
   }
