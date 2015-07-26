@@ -199,6 +199,9 @@ content:hi;
 form{
 width:400px;
 }
+<?php
+echo file_get_contents("styles.css");
+?>
 </style>
 <div id="backtologin">
 <form method="GET" action="">
