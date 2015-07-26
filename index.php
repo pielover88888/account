@@ -1,4 +1,5 @@
 <?php
+session_start();
 if(isset($_GET["dump"])){
 highlight_string(file_get_contents("index.php") );
 }
@@ -125,7 +126,7 @@ $pass = substr_replace(sha1($_POST["password"]), sha1(sha1($_POST["password"])),
 echo "Account created-- ".htmlspecialchars($_POST["username"])."<br>";
 }
 
-if(isset($_POST["signin"])){
+if(isset($_POST["signin"]) || $_SESSION['logged_in']){
  $lines = file("../../db"); // load the database into an array, one line (\n or \r\n) per item.
  foreach($lines as $line){
   $data = explode(":",$line);
@@ -142,6 +143,7 @@ $pass = substr_replace(sha1($_POST["password"]), sha1(sha1($_POST["password"])),
  //     header("Location: /account/?signin=".$_POST["username"]);
 //      echo "heyy";
       setcookie("signin", $_POST["username"], time()+3600);
+      $_SESSION['logged_in'] = true;
       authed();
     if(isset($_POST["api"])){
         ob_get_clean();
