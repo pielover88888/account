@@ -85,20 +85,12 @@ file_put_contents("msg/".$user.":".$_POST["message"]."\n");
 
 
 function authed($username) {
-
 if(!isset($username)){
 getMessages($_POST["username"],true);
-session_start();
-  $_SESSION['login'] = $_POST["username"];
-
 echo "<br>sent msgs:<br>";
 getMessages($_POST["username"].".sent",true,false);
 } else{
-session_start();
-  $_SESSION['login'] = $username;
-
 getMessages($username,true);
-
 echo "<br>sent msgs:<br>";
 getMessages($username.".sent",true,false);
 }
@@ -133,12 +125,12 @@ $pass = substr_replace(sha1($_POST["password"]), sha1(sha1($_POST["password"])),
 echo "Account created-- ".htmlspecialchars($_POST["username"])."<br>";
 }
 
-if(isset($_POST["signin"])  || isset( $_SESSION["login"])){
+if(isset($_POST["signin"])){
  $lines = file("../../db"); // load the database into an array, one line (\n or \r\n) per item.
  foreach($lines as $line){
   $data = explode(":",$line);
   //^get the data from the line (e.g username:hash) // , $data[0] is the username and$data[1] is the hash
-   if($_POST["username"] == $data[0]){
+   if($_POST["username"] == $data[0] ){
     if(!isset($_POST["api"])){
             echo "your username exists.<br>";
     }
@@ -149,8 +141,7 @@ $pass = substr_replace(sha1($_POST["password"]), sha1(sha1($_POST["password"])),
   if($pass == $data[1] OR $oldpass == $data[1]){ // SCORE, signin works.
  //     header("Location: /account/?signin=".$_POST["username"]);
 //      echo "heyy";
-//      setcookie("signin", $_POST["username"], time()+3600);
-	$_SESSION['login'] = $_POST["username"];
+      setcookie("signin", $_POST["username"], time()+3600);
       authed();
     if(isset($_POST["api"])){
         ob_get_clean();
