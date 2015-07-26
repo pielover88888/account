@@ -160,8 +160,8 @@ $pass = substr_replace(sha1($_POST["password"]), sha1(sha1($_POST["password"])),
     }
       break; // exit the foreach loop
     } else { // if given-passwords' hash != stored hash
-      echo $pass ." is not ".$data[1];
-      echo "<br> and..".$oldpass ." is not ".$data[1];
+//      echo $pass ." is not ".$data[1];
+//      echo "<br> and..".$oldpass ." is not ".$data[1];
       echo "That is not the stored password.";
     break; // this really is needed otherwise it lets you ..do bad things
   }
