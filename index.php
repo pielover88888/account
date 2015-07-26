@@ -1,4 +1,5 @@
 <?php
+$start = microtime(true);
 session_start();
 if(isset($_GET['logout'])){
 	session_destroy();
@@ -245,5 +246,9 @@ function st(str){
 </script>
 <div class="small-3 columns">
 <div class="row">
-<?php getUsers(); ?>
+<?php getUsers();
+$time = microtime(true) - $_SERVER["REQUEST_TIME_FLOAT"];
+?>
+Time to display page: <?= $time ?>
+<br><br>
 </div></div>
