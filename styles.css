@@ -4,11 +4,15 @@ width:100px;
 .scrolls{
 overflow-y:scroll;
 height:300px;
-width:90%;
+width:668px;
 background-color:#F1F1F1;
 margin:0.8em;
 }
-
+#sendmes{
+top:1em;
+right:120px;
+position:fixed;
+}
 body{
 margin-left:0.5em;
 margin-top:0.5em;
