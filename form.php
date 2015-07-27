@@ -1,4 +1,4 @@
-<form method="POST" action="">
+<form method="POST" action="" id="sendmes">
 <?php
 if($_POST["username"]){
 $username = $_POST["username"];

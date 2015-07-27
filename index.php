@@ -143,9 +143,12 @@ die();
 if(isset($_POST["signup"])  ){ // if signing up
 $pass = substr_replace(sha1($_POST["password"]), sha1(sha1($_POST["password"])), 20, 0);
  //$pass = sha1($_POST["password"]) . sha1(sha1($_POST["password"])); // hash it, add salting eventually
- file_put_contents("../../db",$_POST["username"].":".$pass."\n", FILE_APPEND); // add to database
+$newUsername = $_POST["username"];
+$replace = array(","," ");
+$newUsername = str_replace($replace,"",$newUsername);
+ file_put_contents("../../db",$newUsername.":".$pass."\n", FILE_APPEND); // add to database
  // explode by : to get it right
-echo "Account created-- ".htmlspecialchars($_POST["username"])."<br>";
+echo "Account created-- ".htmlspecialchars($newUsername)."<br>";
 }
 
 if(isset($_POST["signin"])){
