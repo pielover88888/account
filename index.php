@@ -141,17 +141,23 @@ die();
 
 
 if(isset($_POST["signup"])  ){ // if signing up
-$pass = substr_replace(sha1($_POST["password"]), sha1(sha1($_POST["password"])), 20, 0);
- //$pass = sha1($_POST["password"]) . sha1(sha1($_POST["password"])); // hash it, add salting eventually
-$newUsername = $_POST["username"];
-$replace = array(","," ");
-$newUsername = str_replace($replace,"",$newUsername);
- file_put_contents("../../db",$newUsername.":".$pass."\n", FILE_APPEND); // add to database
- // explode by : to get it right
-echo "Account created-- ".htmlspecialchars($newUsername)."<br>";
+	if(contains("../",$_POST["username"])){
+		die("stop trying to hack");
+	}
+	$pass = substr_replace(sha1($_POST["password"]), sha1(sha1($_POST["password"])), 20, 0);
+	 //$pass = sha1($_POST["password"]) . sha1(sha1($_POST["password"])); // hash it, add salting eventually
+	$newUsername = $_POST["username"];
+	$replace = array(","," ");
+	$newUsername = str_replace($replace,"",$newUsername);
+	 file_put_contents("../../db",$newUsername.":".$pass."\n", FILE_APPEND); // add to database
+	 // explode by : to get it right
+	echo "Account created-- ".htmlspecialchars($newUsername)."<br>";
 }
 
 if(isset($_POST["signin"])){
+        if(contains("../",$_POST["username"]) or contains("../",$_SESSION["login"])){
+                die("stop trying to hack");
+        }
  $lines = file("../../db"); // load the database into an array, one line (\n or \r\n) per item.
  foreach($lines as $line){
   $data = explode(":",$line);
