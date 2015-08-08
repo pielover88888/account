@@ -10,6 +10,6 @@ $username = $_SESSION["login"];
 <input type="hidden" name="authed" value="<?= htmlspecialchars($username) ?>">You're signed in as "<?= htmlspecialchars($username) ?>"
 <br><input type="text" name="to" placeholder="to" value="<?= $_POST["to"]?>"> (case sensitive..)<br>
 <input type="text" name="title" placeholder="title"><br>
-<input type="text" name="message" placeholder="message">
+<textarea type="text" name="message" placeholder="message"></textarea>
 <input type=submit>
 </form>

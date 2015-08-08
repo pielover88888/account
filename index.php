@@ -86,6 +86,9 @@ function sendMessage($userfrom,$userto,$title,$message){
 		}
 		return true; // yus
 	}
+	if(contains("\n",$message) ){
+		$message = str_replace("\n"," ",$message);
+	}
 	file_put_contents("msg/".$userto,"(".$userfrom."->".$userto.") ".$title.":".$message."\n",FILE_APPEND);
 }
 
@@ -225,7 +228,7 @@ top:1em;
 content:hi;
 }
 form{
-width:400px;
+width:28%;
 }
 <?php
 echo file_get_contents("styles.css");
