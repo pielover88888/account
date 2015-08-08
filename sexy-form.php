@@ -1,5 +1,6 @@
 <html>
 <head>
+<title><?php echo $_SERVER["HTTP_HOST"] ?> - Account (not signed in)</title>
 <meta charset='UTF-8'>
 <!-- http://codepen.io/johngerome/pen/pdrgk -->
   <link rel='stylesheet prefetch' href='http://cdn.jsdelivr.net/foundation/5.2.1/css/foundation.min.css'>

@@ -210,6 +210,8 @@ $pass = substr_replace(sha1($_POST["password"]), sha1(sha1($_POST["password"])),
 
 ob_end_flush();
 ?>
+<head>
+<title><?php echo $_SERVER["HTTP_HOST"] ?> - Account</title>
 <link rel='stylesheet prefetch' href='http://cdn.jsdelivr.net/foundation/5.2.1/css/foundation.min.css'>
 <style>
 code{
@@ -234,6 +236,7 @@ width:28%;
 echo file_get_contents("styles.css");
 ?>
 </style>
+</head>
 <div id="backtologin">
 <form method="GET" action="" class="logout-button">
 <input type="hidden" name="logout" value="true">
