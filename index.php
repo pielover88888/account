@@ -211,7 +211,7 @@ $pass = substr_replace(sha1($_POST["password"]), sha1(sha1($_POST["password"])),
 ob_end_flush();
 ?>
 <head>
-<title><?php echo $_SERVER["HTTP_HOST"] ?> - Account</title>
+<title>Account - <?php echo $_SERVER["HTTP_HOST"] ?></title>
 <link rel='stylesheet prefetch' href='http://cdn.jsdelivr.net/foundation/5.2.1/css/foundation.min.css'>
 <style>
 code{
