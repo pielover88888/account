@@ -6,7 +6,6 @@ if(isset($_GET['logout'])){
 	header("Location: /account/");
 	die();
 }
-
 if(isset($_GET["dump"])){
 highlight_string(file_get_contents("index.php") );
 }
@@ -96,7 +95,7 @@ function getUsers(){
  $lines = file("../../db"); // load the database into an array, one line (\n or \r\n) per item.
  foreach($lines as $line){
   $data = explode(":",$line); // <li>
-  echo "<li>".htmlspecialchars("'".$data[0]."' ")."</li>";
+  echo "<li>".htmlspecialchars("'".$data[0]."' ")."<a href='?view=".htmlspecialchars(str_replace("/","",$data[0]))."'>viewprofile</a></li>";
 //  return $data[0];
 }
 }
@@ -124,23 +123,44 @@ include "form.php";
 return true;
 }
 
-
-if(isset($_POST["authed"]) ){
-sendMessage($_POST["authed"],$_POST["to"],$_POST["title"],$_POST["message"]);
-sendMessage($_POST["authed"],$_POST["authed"].".sent","(->".$_POST["to"].") ".$_POST["title"],$_POST["message"]);
-echo "Message sent!..Assuming the user exists. if they dont, they can make an account with that name to access the message.<br>";
-authed($_POST["authed"]);
-//file_put_contents("msg/".$_POST["authed"],$_POST["title"].":".$_POST["message"]."\n");
+if(isset($_GET["view"])){
+	$name = $_GET["view"];
+	$name = str_replace("../","",$name);
+	if(file_exists("profile/".$name)){
+		echo "<pre><code>";
+		highlight_string(file_get_contents("profile/".$name));
+		echo "</code></pre>";
+	} else { echo $name." didn't make a profile yet<br>"; }
 }
-elseif($_SESSION["login"])
+
+if( isset($_GET["do"]) and $_GET["do"] === "profile" and isset($_SESSION["login"]) ) {
+	if( isset($_POST["do"]) and $_POST["do"] === "profile" ) {
+		$nacata = htmlspecialchars($_POST["newcontent"]);
+		file_put_contents("profile/".$_SESSION["login"],$nacata);
+	}
+	include "profile_edit.php";
+	die();
+}
+
+
+if( isset($_POST["authed"]) ){
+	sendMessage($_POST["authed"],$_POST["to"],$_POST["title"],$_POST["message"]);
+	sendMessage($_POST["authed"],$_POST["authed"].".sent","(->".$_POST["to"].") ".$_POST["title"],$_POST["message"]);
+	echo "Message sent!..Assuming the user exists. if they dont, they can make an account with that name to access the message.<br>";
+	header("Location: /account/");
+	authed($_POST["authed"]);
+	//file_put_contents("msg/".$_POST["authed"],$_POST["title"].":".$_POST["message"]."\n");
+}
+elseif( $_SESSION["login"] )
 {
     authed($_SESSION["login"]);
 }
 
-if(!isset($_POST["signup"]) and !isset($_POST["signin"]) and !isset($_POST["authed"]) and !isset($_SESSION["login"])){
-include "sexy-form.php";
-die();
+if(!isset($_POST["signup"]) and !isset($_POST["signin"]) and !isset($_POST["authed"]) and !isset($_SESSION["login"])) {
+	include "sexy-form.php";
+	die();
 }
+
 
 
 if(isset($_POST["signup"])  ){ // if signing up
@@ -214,24 +234,6 @@ ob_end_flush();
 <title>Account - <?php echo $_SERVER["HTTP_HOST"] ?></title>
 <link rel='stylesheet prefetch' href='http://cdn.jsdelivr.net/foundation/5.2.1/css/foundation.min.css'>
 <style>
-code{
-word-wrap: break-word;
-width:400px;
-}
-.scrolls{
-/*height:230px;
-width:800px;
-overflow:scroll;*/
-}
-#backtologin{
-position:fixed;
-right:0.8em;
-top:1em;
-content:hi;
-}
-form{
-width:28%;
-}
 <?php
 echo file_get_contents("styles.css");
 ?>
@@ -243,7 +245,7 @@ echo file_get_contents("styles.css");
 <input type="submit" id="submit" class="button expand" value="Log out" />
 </form>
 </div>
-<form method="POST" action="">
+<!--form method="POST" action="">
 Add account.
 <input type="hidden" name="signup" value="true">
 <input type="text" name="username" placeholder="Username">
@@ -257,7 +259,7 @@ Sign in.
 <input type="password" name="password" placeholder="Password">
 api mode: <input type="checkbox" name="api">
 <input type="submit">
-</form>
+</form-->
 
 <form method="GET" action="">
 <input type="hidden" name="dump" value="true">

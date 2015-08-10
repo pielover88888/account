@@ -4,7 +4,7 @@ width:100px;
 .scrolls{
 overflow-y:scroll;
 height:300px;
-width:668px;
+width:50%;
 background-color:#F1F1F1;
 margin:0.8em;
 }
@@ -17,3 +17,17 @@ body{
 margin-left:0.5em;
 margin-top:0.5em;
 }
+code{
+word-wrap: break-word;
+width:400px;
+}
+#backtologin{
+position:fixed;
+right:0.8em;
+top:1em;
+content:hi;
+}
+form{
+width:28%;
+}
+
