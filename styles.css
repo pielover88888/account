@@ -30,4 +30,12 @@ content:hi;
 form{
 width:28%;
 }
-
+.small{
+height:32px;
+padding:10px;
+line-height: 5px;
+}
+.profile_edit{
+float:right;
+margin-top:-1em;
+}
